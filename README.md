@@ -12,12 +12,12 @@
 Pustaring, perpustakaan daring yang bertujuan untuk mempromosikan literasi, membangun komunitas pembaca yang aktif, dan memberikan akses yang mudah ke pengetahuan dan hiburan melalui buku. Dengan fitur-fitur inovatif yang kami tawarkan, Pustaring diharapkan akan menjadi sumber daya berharga bagi semua pengguna.
 
 ## Daftar modul yang akan diimplementasikan
-- **Ulasan**: Pengguna yang telah masuk dapat menambahkan ulasan pada buku dan halaman deskripsi buku.
-- **Beranda**: Menampilkan beranda buku dengan filter yang memungkinkan pengguna menemukan buku yang sesuai dengan minat mereka.
-- **Customer Service**: Pengguna yang telah masuk dapat mengakses layanan pelaporan atau pengaduan.
-- **Peminjaman Buku**: Pengguna yang telah masuk dapat melakukan peminjaman buku.
-- **Sistem Manajemen**: Pegawai dapat mengelola persetujuan peminjaman buku dan penyewaan ruangan serta mengelola stok buku.
-- **Fitur Premium**: Pengguna premium dapat menyewa ruangan, mengakses buku-buku khusus, dan memiliki durasi peminjaman yang lebih lama.
+- **Ulasan**: Pengguna yang telah masuk dapat menambahkan ulasan pada buku dan halaman deskripsi buku.(Nur Azizah Febriyana)
+- **Beranda**: Menampilkan beranda buku dengan filter yang memungkinkan pengguna menemukan buku yang sesuai dengan minat mereka.(Ruizhi Davin)
+- **Customer Service**: Pengguna yang telah masuk dapat mengakses layanan pelaporan atau pengaduan.(Maulana Seto)
+- **Peminjaman Buku**: Pengguna yang telah masuk dapat melakukan peminjaman buku.(Luhur Budi Arbilianto)
+- **Sistem Manajemen**: Pegawai dapat mengelola persetujuan peminjaman buku dan penyewaan ruangan serta mengelola stok buku.(Rhaken Shaquille Akbar Yanuanda)
+- **Fitur Premium**: Pengguna premium dapat menyewa ruangan, mengakses buku-buku khusus, dan memiliki durasi peminjaman yang lebih lama.(Amanda Oktivia Sharfina)
 
 ## Role atau Peran Pengguna
 - **Tamu**: Pengguna default yang hanya dapat membaca buku dan ulasan.
