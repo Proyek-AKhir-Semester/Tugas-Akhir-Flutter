@@ -1,18 +1,38 @@
 # Tugas-Akhir-Flutter
 
-1. Daftar nama anggota kelompok
-   - Ruizhi Davin - 2206026082
-   - Rhaken Shaquille Akbar Yanuanda - 2206814791
-   - Amanda Oktivia Sharfina - 2206830076
-   - Luhur Budi Arbilianto - 2206824262
-   - Nur Azizah Febriyana - 2206824363
-   - Maulana Seto - 2206081471
+## Daftar nama anggota kelompok
+- Ruizhi Davin - 2206026082
+- Rhaken Shaquille Akbar Yanuanda - 2206814791
+- Amanda Oktivia Sharfina - 2206830076
+- Luhur Budi Arbilianto - 2206824262
+- Nur Azizah Febriyana - 2206824363
+- Maulana Seto - 2206081471
    
-2. Tautan APK (Tidak harus ada pada saat Tahap I; tautan APK dapat ditambahkan belakangan ke README.md setelah selesai mengerjakan Tahap II.)
-3. Deskripsi aplikasi (nama dan fungsi aplikasi)
-4. Daftar modul yang diimplementasikan beserta pembagian kerja per anggota
-5. Peran atau aktor pengguna aplikasi
-6. Alur pengintegrasian dengan web service untuk terhubung dengan aplikasi web yang sudah dibuat saat Proyek Tengah Semester
-7. Tautan berita acara
+## Cerita Aplikasi
+Pustaring, perpustakaan daring yang bertujuan untuk mempromosikan literasi, membangun komunitas pembaca yang aktif, dan memberikan akses yang mudah ke pengetahuan dan hiburan melalui buku. Dengan fitur-fitur inovatif yang kami tawarkan, Pustaring diharapkan akan menjadi sumber daya berharga bagi semua pengguna.
 
-  - https://docs.google.com/spreadsheets/d/171DiVqzsgO_UzHdiebzTAQt6rMUklaqAm-gg-xunmzM/edit?usp=sharing 
+## Daftar modul yang akan diimplementasikan
+- **Ulasan**: Pengguna yang telah masuk dapat menambahkan ulasan pada buku dan halaman deskripsi buku.
+- **Beranda**: Menampilkan beranda buku dengan filter yang memungkinkan pengguna menemukan buku yang sesuai dengan minat mereka.
+- **Customer Service**: Pengguna yang telah masuk dapat mengakses layanan pelaporan atau pengaduan.
+- **Peminjaman Buku**: Pengguna yang telah masuk dapat melakukan peminjaman buku.
+- **Sistem Manajemen**: Pegawai dapat mengelola persetujuan peminjaman buku dan penyewaan ruangan serta mengelola stok buku.
+- **Fitur Premium**: Pengguna premium dapat menyewa ruangan, mengakses buku-buku khusus, dan memiliki durasi peminjaman yang lebih lama.
+
+## Role atau Peran Pengguna
+- **Tamu**: Pengguna default yang hanya dapat membaca buku dan ulasan.
+- **Pengguna Biasa**: Pengguna yang dapat membaca buku, membaca ulasan, menambah ulasan, dan meminjam buku.
+- **Pengguna Premium**: Pengguna yang dapat membaca buku, membaca ulasan, menambah ulasan, meminjam buku, mengakses buku-buku khusus, menyewa ruangan, dan memiliki batas durasi peminjaman yang lebih lama.
+- **Pegawai**: Pegawai yang dapat mengakses fitur manajemen perpustakaan.
+
+## Alur Pengintegrasian dengan Web Service untuk Terhubung dengan Aplikasi Web yang Sudah dibuat saat Proyek Tengah Semester
+1. Website PTS yang sudah di-deploy akan kami atur agar memiliki backend yang dapat menampilkan data-data terkait dalam format JSON. 
+
+2. Membuat file bernama fetch.dart dalam utils folder di module apps masing-masing anggota untuk mengakses data JSON dari backend secara async. File fetch.dart dilengkapi dengan function yang dapat dipanggil untuk me-return data yang diperlukan dalam suatu list. 
+
+3. Function di dalam fetch.dart memiliki url yang dapat digunakan sebagai endpoint JSON untuk integrasi aplikasi.
+
+4. Pemanggilan function dilakukan di widget terkait untuk diolah sesuai dengan kebutuhan fitur dari masing-masing module.
+
+## Tautan berita acara
+- https://docs.google.com/spreadsheets/d/171DiVqzsgO_UzHdiebzTAQt6rMUklaqAm-gg-xunmzM/edit?usp=sharing 
