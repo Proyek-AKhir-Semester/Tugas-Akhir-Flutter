@@ -4,6 +4,7 @@ import 'package:pustaring/ulasan/screens/bookDetailPage.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:pustaring/ulasan/screens/bookListPage.dart';
+import 'package:pustaring/ulasan/screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
           useMaterial3: true,
         ),
-        home:BookPage(), // Pass the placeholder book here
+        home:LoginApp(), // Pass the placeholder book here
       ),
     );
   }

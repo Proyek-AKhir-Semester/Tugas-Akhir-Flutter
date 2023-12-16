@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pustaring/ulasan/screens/reviewPage.dart';
+import 'package:pustaring/ulasan/screens/reviewListPage.dart';
 import '../../models/book.dart'; // Import your Book model here
 
 class BookDetailPage extends StatelessWidget {
@@ -44,7 +44,7 @@ class BookDetailPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ReviewBukuPage(bukuId: book.pk),
+                            builder: (context) => ReviewListPage(bookId: book.pk),
                           ),
                         );
                       },
