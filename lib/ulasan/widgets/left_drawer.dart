@@ -28,7 +28,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(10)),
                 Text(
-                  "Invetory rhaken",
+                  "PUSTARING",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
