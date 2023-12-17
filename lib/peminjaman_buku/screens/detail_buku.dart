@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../models/book.dart';
-import '../models/product.dart';
+import 'package:pustaring/models/book.dart';
 
+class DetailBuku extends StatefulWidget {
+  final Book book;
 
-class ItemDetailPage extends StatefulWidget {
-  final Book item;
-
-  const ItemDetailPage({Key? key, required this.item}) : super(key: key);
+  const DetailBuku({Key? key, required this.book}) : super(key: key);
 
   @override
-  State<ItemDetailPage> createState() => _ItemDetailPageState();
+  State<DetailBuku> createState() => _DetailBukuState();
 }
 
-class _ItemDetailPageState extends State<ItemDetailPage> {
-
-
+class _DetailBukuState extends State<DetailBuku> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.item.fields.title),
+        title: Text(widget.book.fields.title),
         backgroundColor: const Color(0xFFAA5200),
         foregroundColor: const Color(0xFFFFF0A3),
       ),
@@ -30,13 +26,13 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Title: ${widget.item.fields.title}',
+              'Title: ${widget.book.fields.title}',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            Text('Genre: ${widget.item.fields.genre}'),
+            Text('Genre: ${widget.book.fields.genre}'),
             SizedBox(height: 10),
-            Text('Sumaary: ${widget.item.fields.summary}'),
+            Text('Summary: ${widget.book.fields.summary}'),
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
@@ -46,6 +42,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                     backgroundColor: MaterialStateProperty.all(Colors.indigo),
                   ),
                   onPressed: () async {
+                    // Add your functionality here
                     print("temp");
                   },
                   child: const Text(
