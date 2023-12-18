@@ -6,6 +6,7 @@ import 'package:pustaring/Sistem Manajemen/screens/deskirpsi_produk.dart';
 import 'package:pustaring/Sistem Manajemen/widgets/left_drawer.dart';
 
 import '../../models/book.dart';
+import '../../models/peminjaman.dart';
 
 class BookPage extends StatefulWidget {
   const BookPage({Key? key}) : super(key: key);
@@ -15,6 +16,8 @@ class BookPage extends StatefulWidget {
 }
 
 class _BookPageState extends State<BookPage> {
+
+
   Future<List<Book>> fetchBook() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var url = Uri.parse(
@@ -37,6 +40,7 @@ class _BookPageState extends State<BookPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Manage Buku"),
@@ -55,8 +59,8 @@ class _BookPageState extends State<BookPage> {
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(
                 child: Text(
-                  "Tidak ada data produk.",
-                  style: TextStyle(color: Color(0xff59A5D8), fontSize: 20),
+                  "Tidak ada data produk",
+                  style: TextStyle(color: Color(0xFFAA5200), fontSize: 20),
                 ),
               );
             } else {

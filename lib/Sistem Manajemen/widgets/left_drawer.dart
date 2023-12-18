@@ -3,6 +3,8 @@ import 'package:pustaring/Sistem Manajemen/screens/menu.dart';
 import 'package:pustaring/Sistem Manajemen/screens/shoplist_form.dart';
 
 import '../screens/list_product.dart';
+import '../screens/list_ruangan.dart';
+import '../screens/tambah_ruangan.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -10,31 +12,32 @@ class LeftDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: const Color(0xFFFFF0A3),
       child: ListView(
         children: [
           const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.indigo,
+              color: Color(0xFFAA5200),
             ),
             child: Column(
               children: [
                 Text(
-                  'Invetory',
+                  'Pustaring',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Color(0xFFFFF0A3),
                   ),
                 ),
                 Padding(padding: EdgeInsets.all(10)),
                 Text(
-                  "Invetory rhaken",
+                  "Sistem Manajemen",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,
-                    color: Colors.white,
+                    color: Color(0xFFFFF0A3),
                   ),
                 ),
               ],
@@ -53,20 +56,31 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.add_shopping_cart),
+            leading: const Icon(Icons.add),
             title: const Text('Tambah Ruangan'),
             // Bagian redirection ke ShopFormPage
             onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ShopFormPage(),
+                    builder: (context) => RuanganFormPage(),
                   ));
             },
           ),
           ListTile(
-            leading: const Icon(Icons.shopping_basket),
-            title: const Text('Daftar Produk'),
+            leading: const Icon(Icons.meeting_room),
+            title: const Text('Manage Ruangan'),
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RuangPage()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.checklist),
+            title: const Text('Manage Peminjaman'),
             onTap: () {
               // Route menu ke halaman produk
               Navigator.push(

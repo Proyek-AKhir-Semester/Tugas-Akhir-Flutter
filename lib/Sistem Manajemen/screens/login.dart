@@ -1,35 +1,36 @@
-import 'package:pustaring/Sistem Manajemen/screens/menu.dart';
+import 'dart:convert';
+import 'dart:js_interop';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:pustaring/Sistem%20Manajemen/screens/menu.dart';
+import 'package:pustaring/Sistem%20Manajemen/screens/register.dart';
 
 void main() {
-  runApp(const LoginApp());
+  runApp(const LoginPBApp());
 }
 
-class LoginApp extends StatelessWidget {
-  const LoginApp({super.key});
+class LoginPBApp extends StatelessWidget {
+  const LoginPBApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Login',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginPage(),
+      home: LoginPBPage(),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPBPage extends StatefulWidget {
+  const LoginPBPage({Key? key}) : super(key: key);
+  static String uname = '';
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginPBPageState createState() => _LoginPBPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPBPageState extends State<LoginPBPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -38,8 +39,11 @@ class _LoginPageState extends State<LoginPage> {
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Pustaring'),
+        backgroundColor: const Color(0xFFAA5200),
+        foregroundColor: const Color(0xFFFFF0A3),
       ),
+      backgroundColor: const Color(0xFFFFF0A3),
       body: Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -60,51 +64,82 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: true,
             ),
             const SizedBox(height: 24.0),
-            ElevatedButton(
-              onPressed: () async {
-                String username = _usernameController.text;
-                String password = _passwordController.text;
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFAA5200), // Button color
+                  ),
+                  onPressed: () async {
+                    String username = _usernameController.text;
+                    LoginPBPage.uname = username;
+                    String password = _passwordController.text;
 
-                // Cek kredensial
-                // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                // Untuk menyambungkan Android emulator dengan Django pada localhost,
-                // gunakan URL http://10.0.2.2/
-                final response = await request.login("http://127.0.0.1:8000/auth/login/", {
-                  'username': username,
-                  'password': password,
-                });
+                    final response = await request.login("http://127.0.0.1:8000/auth/login/", {
+                      'username': username,
+                      'password': password,
+                    });
 
-                if (request.loggedIn) {
-                  String message = response['message'];
-                  String uname = response['username'];
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Sistem_Manajemen()),
-                  );
-                  ScaffoldMessenger.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                        SnackBar(content: Text("$message Selamat datang, $uname.")));
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Login Gagal'),
-                      content:
-                      Text(response['message']),
-                      actions: [
-                        TextButton(
-                          child: const Text('OK'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                    if (request.loggedIn) {
+                      String message = response['message'];
+                      username = response['username'];
+
+                      Navigator.pushReplacement(
+                        context,
+                        // MaterialPageRoute(builder: (context) => HomePinjam()),
+                        MaterialPageRoute(builder: (context) => Sistem_Manajemen()),
+                      );
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          SnackBar(content: Text("$message Selamat datang, $username.")),
+                        );
+                    }
+                    else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Login Gagal'),
+                          content: Text(response['message']),
+                          actions: [
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
                         ),
-                      ],
+                      );
+                    }
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      color: Color(0xFFFFF0A3),
                     ),
-                  );
-                }
-              },
-              child: const Text('Login'),
+                  ),
+                ),
+                const SizedBox(width: 16.0),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFAA5200), // Button color
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RegisterPage()),
+                    );
+                  },
+                  child: const Text(
+                    'Register',
+                    style: TextStyle(
+                      color: Color(0xFFFFF0A3),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

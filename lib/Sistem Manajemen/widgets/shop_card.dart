@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:pustaring/Sistem Manajemen/screens/shoplist_form.dart';
 
 import '../screens/list_product.dart';
+import '../screens/list_ruangan.dart';
 import '../screens/login.dart';
+import '../screens/tambah_ruangan.dart';
 
 class ShopItem {
   final String name;
@@ -36,12 +38,16 @@ class ShopCard extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ShopFormPage(),
+                  builder: (context) => RuangPage(),
                 ));
           }
-          else if (item.name == "Manage Buku") {
+          else if (item.name == "Manage Peminjaman") {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const BookPage()));
+          }
+          else if (item.name == "Tambah Ruangan") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const RuanganFormPage()));
           }
           else if (item.name == "Logout") {
             final response = await request.logout(
@@ -49,13 +55,12 @@ class ShopCard extends StatelessWidget {
                 "http://127.0.0.1:8000/auth/logout/");
             String message = response["message"];
             if (response['status']) {
-              String uname = response["username"];
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("$message Sampai jumpa, $uname."),
+                content: Text("Sampai jumpa"),
               ));
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
+                MaterialPageRoute(builder: (context) => const LoginPBApp()),
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
