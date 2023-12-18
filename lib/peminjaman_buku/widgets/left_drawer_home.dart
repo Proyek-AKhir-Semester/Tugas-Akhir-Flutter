@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pustaring/Sistem Manajemen/screens/menu.dart';
 import 'package:pustaring/Sistem Manajemen/screens/shoplist_form.dart';
+import 'package:pustaring/peminjaman_buku/screens/list_buku_pinjaman.dart';
 import 'package:pustaring/peminjaman_buku/screens/pinjam_buku_page.dart';
 
 class LeftDrawerHome extends StatelessWidget {
@@ -71,6 +72,12 @@ class LeftDrawerHome extends StatelessWidget {
               title: const Text('Daftar Buku Pinjaman'),
               onTap: () {
                 // Add your redirection logic here
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListBukuPinjaman(),
+                  ),
+                );
               },
             ),
             ListTile(
