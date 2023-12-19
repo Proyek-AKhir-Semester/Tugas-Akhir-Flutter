@@ -3,8 +3,11 @@ import 'dart:js_interop';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:pustaring/Auth/register.dart';
 import 'package:pustaring/Sistem%20Manajemen/screens/menu.dart';
-import 'package:pustaring/Sistem%20Manajemen/screens/register.dart';
+import 'package:pustaring/peminjaman_buku/screens/menu_pinjam.dart';
+
+import '../peminjaman_buku/screens/pinjam_buku_page.dart';
 
 void main() {
   runApp(const LoginPBApp());
@@ -88,7 +91,17 @@ class _LoginPBPageState extends State<LoginPBPage> {
                       Navigator.pushReplacement(
                         context,
                         // MaterialPageRoute(builder: (context) => HomePinjam()),
-                        MaterialPageRoute(builder: (context) => Sistem_Manajemen()),
+                          MaterialPageRoute(
+                            builder: (context) {
+                              if (username == "admin") {
+                                // Navigate to Sistem_Manajemen for admin user
+                                return Sistem_Manajemen();
+                              } else {
+                                // Navigate to a different page for other users
+                                return PinjamBukuPage();
+                              }
+                            },
+                          ),
                       );
                       ScaffoldMessenger.of(context)
                         ..hideCurrentSnackBar()

@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:pustaring/Sistem Manajemen/screens/shoplist_form.dart';
+import 'package:pustaring/peminjaman_buku/screens/pinjam_buku_page.dart';
 
 import '../../Auth/login.dart';
-import '../screens/list_product.dart';
-import '../screens/list_ruangan.dart';
-import '../screens/tambah_ruangan.dart';
 
-class ShopItem {
+
+class ItemPinjam {
   final String name;
   final IconData icon;
   final Color color;
 
-  ShopItem(this.name, this.icon, this.color);
+  ItemPinjam(this.name, this.icon, this.color);
 }
 
-class ShopCard extends StatelessWidget {
-  final ShopItem item;
+class CardPinjam extends StatelessWidget {
+  final ItemPinjam item;
 
-  const ShopCard(this.item, {super.key}); // Constructor
+  const CardPinjam(this.item, {super.key}); // Constructor
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +33,18 @@ class ShopCard extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
                 content: Text("Kamu telah menekan tombol ${item.name}!")));
-          if (item.name == "Manage Ruangan") {
+          print("Item Name: ${item.name}");
+
+          if (item.name == "Pinjam Buku") {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => RuangPage(),
+                  builder: (context) => PinjamBukuPage(),
                 ));
           }
-          else if (item.name == "Manage Peminjaman") {
+          else if (item.name == "Buku Pinjaman Anda") {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const BookPage()));
-          }
-          else if (item.name == "Tambah Ruangan") {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const RuanganFormPage()));
+                MaterialPageRoute(builder: (context) => const PinjamBukuPage()));
           }
           else if (item.name == "Logout") {
             final response = await request.logout(
