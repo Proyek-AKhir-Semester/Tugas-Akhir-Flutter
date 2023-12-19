@@ -127,13 +127,17 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text('Buku Berhasil Dikembalikan'),
+                                      title: Text('Buku Berhasil Dikembalikan', style: const TextStyle(
+                                        color: Color(0xFFB15D08),
+                                      ),),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('OK'),
+                                          child: Text('OK', style: const TextStyle(
+                                            color: Color(0xFFB15D08),
+                                          ),),
                                         ),
                                       ],
                                     );
@@ -145,13 +149,17 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text('Buku Belum Diacc'),
+                                      title: Text('Buku Belum Diacc', style: const TextStyle(
+                                        color: Color(0xFFB15D08),
+                                      ),),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('OK'),
+                                          child: Text('OK', style: const TextStyle(
+                                            color: Color(0xFFB15D08),
+                                          ),),
                                         ),
                                       ],
                                     );

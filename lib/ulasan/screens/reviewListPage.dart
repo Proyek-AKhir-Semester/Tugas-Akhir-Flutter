@@ -16,7 +16,7 @@ class ReviewListPage extends StatefulWidget {
 class _ReviewListPageState extends State<ReviewListPage> {
   Future<List<Product>> fetchReviews({bool shouldRefresh = false}) async {
     List<Product> _reviews = [];
-    var url = Uri.parse('http://localhost:8000/ulasan/get-reviews-json/${widget.bookId}/');
+    var url = Uri.parse('http://127.0.0.1:8000/ulasan/get-reviews-json/${widget.bookId}/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -119,14 +119,6 @@ class _ReviewListPageState extends State<ReviewListPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                var userReviewUrl = Uri.parse('http://localhost:8000/ulasan/get-user-reviews/1');
-                var userReviewResponse = await http.get(
-                  userReviewUrl,
-                  headers: {"Content-Type": "application/json"},
-                );
-
-                var userReviewData = jsonDecode(utf8.decode(userReviewResponse.bodyBytes));
-                if (userReviewData.isEmpty){
                 final result = await Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -137,19 +129,14 @@ class _ReviewListPageState extends State<ReviewListPage> {
                 if (result == true) {
                   await fetchReviews(shouldRefresh: true);
                 }
-                } else{
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Anda sudah pernah menambahkan review untuk buku ini.'),
-                    ),
-                  );
-                }
+
               },
+
               child: Text('Tambah Ulasan',style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Color(0xFFB15D08)),
-                    ),
-                style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 243, 191, 58),
-            ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 243, 191, 58),
+              ),
             ),
           ],
         ),

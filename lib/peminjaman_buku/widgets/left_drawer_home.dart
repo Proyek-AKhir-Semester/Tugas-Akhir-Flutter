@@ -88,7 +88,7 @@ class LeftDrawerHome extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.book),
-              title: const Text('Reviw buku'),
+              title: const Text('Review buku'),
               onTap: () {
                 // Add your redirection logic here
                 Navigator.pushReplacement(
