@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
           useMaterial3: true,
         ),
-        home:LoginApp(), // Pass the placeholder book here
+        home:BookPage(), // Pass the placeholder book here
       ),
     );
   }

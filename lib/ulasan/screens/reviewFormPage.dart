@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:pustaring/ulasan/screens/login.dart';
 import 'package:pustaring/ulasan/widgets/left_drawer.dart';
 
 class ReviewFormPage extends StatefulWidget {
@@ -122,6 +123,8 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                   ),
                   ElevatedButton(
                   onPressed: () async {
+                    final request = context.read<CookieRequest>();
+                    if (request.loggedIn) {
                     if (_formKey.currentState!.validate()) {
                       final response = await request.postJson(
                         "http://localhost:8000/ulasan/create-review-flutter/${widget.bookId}/",
@@ -137,17 +140,9 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(reviewText, style: TextStyle(fontSize: 16)),
-                            action: SnackBarAction(
-                              label: 'OK',
-                              onPressed: () {
-                                // Clear the form and hide the "Kirim Ulasan" button
-                                _clearForm();
-                                // Send a signal back to the ReviewListPage to refresh the list
-                                Navigator.pop(context, true);
-                              },
-                            ),
                           ),
                         );
+                        Navigator.pop(context, true);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -156,7 +151,37 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                         );
                       }
                     }
-                  },
+                  }else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('Gagal Menambahkan Ulasan', style: TextStyle(color: Color.fromARGB(255, 119, 63, 6))),
+                        content: Text('Silakan login untuk menambahkan ulasan.',style: TextStyle(color: Color.fromARGB(255, 119, 63, 6))),
+                        backgroundColor: Color.fromARGB(255, 243, 191, 58),
+                        actions: [
+                          TextButton(
+                            child: Text('Login', style: TextStyle(color: Color.fromARGB(255, 138, 112, 47)),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => LoginApp()),
+                              );
+                            },
+                          ),
+                          TextButton(
+                            child: Text('Batal',style: TextStyle(color: Color.fromARGB(255, 138, 112, 47)),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
                     child: const Text(
                       "Kirim Ulasan",
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Color(0xFFB15D08)),

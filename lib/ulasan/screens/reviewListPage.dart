@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pustaring/ulasan/models/product.dart';
 import 'package:pustaring/ulasan/screens/reviewFormPage.dart';
+import 'package:pustaring/ulasan/widgets/left_drawer.dart';
 
 class ReviewListPage extends StatefulWidget {
   final int bookId;
@@ -35,7 +36,6 @@ class _ReviewListPageState extends State<ReviewListPage> {
         _reviews = reviews;
       });
     }
-
     return reviews;
   }
 
@@ -47,6 +47,7 @@ class _ReviewListPageState extends State<ReviewListPage> {
         backgroundColor: const Color(0xFFAA5200),
         foregroundColor: const Color(0xFFFFF0A3),
       ),
+      drawer: const LeftDrawer(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -75,6 +76,10 @@ class _ReviewListPageState extends State<ReviewListPage> {
                     return ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (_, index) {
+                        // Reverse the list so that the latest review comes first
+                        final reversedIndex = snapshot.data!.length - 1 - index;
+                        final review = snapshot.data![reversedIndex];
+
                         return Card(
                           margin: const EdgeInsets.symmetric(
                             horizontal: 16,
@@ -88,19 +93,19 @@ class _ReviewListPageState extends State<ReviewListPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${snapshot.data![index].userName}",
+                                  "${review.userName}",
                                   style: const TextStyle(
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Text("Rating: ${snapshot.data![index].rating} stars"),
+                                Text("Rating: ${review.rating} stars"),
                                 const SizedBox(height: 10),
-                                Text("${snapshot.data![index].reviewText}"),
+                                Text("${review.reviewText}"),
                                 const SizedBox(height: 10),
                                 Text(
-                                  "Date Added: ${snapshot.data![index].dateAdded}",
+                                  "Date Added: ${review.dateAdded}",
                                 ),
                               ],
                             ),
@@ -114,6 +119,14 @@ class _ReviewListPageState extends State<ReviewListPage> {
             ),
             ElevatedButton(
               onPressed: () async {
+                var userReviewUrl = Uri.parse('http://localhost:8000/ulasan/get-user-reviews/1');
+                var userReviewResponse = await http.get(
+                  userReviewUrl,
+                  headers: {"Content-Type": "application/json"},
+                );
+
+                var userReviewData = jsonDecode(utf8.decode(userReviewResponse.bodyBytes));
+                if (userReviewData.isEmpty){
                 final result = await Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -123,6 +136,13 @@ class _ReviewListPageState extends State<ReviewListPage> {
 
                 if (result == true) {
                   await fetchReviews(shouldRefresh: true);
+                }
+                } else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Anda sudah pernah menambahkan review untuk buku ini.'),
+                    ),
+                  );
                 }
               },
               child: Text('Tambah Ulasan',style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Color(0xFFB15D08)),
