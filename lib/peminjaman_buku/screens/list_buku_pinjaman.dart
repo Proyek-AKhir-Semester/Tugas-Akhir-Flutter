@@ -68,12 +68,12 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) => GestureDetector(
-                  onTap: () {
-                    var url = Uri.parse(
-                        'http://127.0.0.1:8000/sistem_manajemen/edit_peminjaman/${snapshot.data![index].pk}');
-                    var response = http.get(url);
-                    setState(() {});
-                  },
+                  // onTap: () {
+                  //   var url = Uri.parse(
+                  //       'http://127.0.0.1:8000/sistem_manajemen/edit_peminjaman/${snapshot.data![index].pk}');
+                  //   var response = http.get(url);
+                  //   setState(() {});
+                  // },
                   child: Card(
                     elevation: 4, // Add elevation for a shadow effect
                     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -108,6 +108,61 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                               color: Color(0xFFB15D08),
                             ),
                           ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Color(0xFFB15D08),
+                            ),
+                            onPressed: () {
+                              if (snapshot.data![index].fields.statusAcc) {
+                                var url = Uri.parse(
+                                    'http://127.0.0.1:8000/peminjaman_buku/kembalikan_buku/${snapshot.data![index].fields.buku}/');
+                                var response = http.get(url);
+                                setState(() {});
+
+                                // Show success pop-up
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Buku Berhasil Dikembalikan'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                // Show failure pop-up
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Buku Belum Diacc'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            child: const Text(
+                              'Kembalikan',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+
                         ],
                       ),
                     ),
