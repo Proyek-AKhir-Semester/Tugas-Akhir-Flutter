@@ -9,8 +9,8 @@ import 'package:pustaring/peminjaman_buku/screens/pinjam_buku_page.dart';
 import '../../Auth/login.dart';
 import '../../ulasan/screens/bookListPage.dart';
 
-class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({super.key});
+class LeftDrawerHome extends StatelessWidget {
+  const LeftDrawerHome({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pustaring/ulasan/screens/reviewListPage.dart';
+
 import '../../models/book.dart';
+
 
 class BookDetailPage extends StatelessWidget {
   final Book book;
@@ -49,9 +51,8 @@ class BookDetailPage extends StatelessWidget {
                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Text('Genre: ${book.fields.genre}', style: TextStyle(fontSize: 18)),
-                      Text('Ketersediaan: ${book.fields.ketersediaan == 'Tersedia' ? 'Tersedia' : 'Tidak tersedia'}', style: TextStyle(fontSize: 18)),
                       SizedBox(height: 10),
-                      Text('Ringkasan: ${book.fields.summary}'),
+                      Text('Summary: ${book.fields.summary}'),
                     ],
                   ),
                 ),

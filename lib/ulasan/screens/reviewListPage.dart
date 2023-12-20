@@ -16,7 +16,7 @@ class ReviewListPage extends StatefulWidget {
 class _ReviewListPageState extends State<ReviewListPage> {
   Future<List<Product>> fetchReviews({bool shouldRefresh = false}) async {
     List<Product> _reviews = [];
-    var url = Uri.parse('http://localhost:8000/ulasan/get-reviews-json/${widget.bookId}/');
+    var url = Uri.parse('https://pustaring-b05-tk.pbp.cs.ui.ac.id/ulasan/get-reviews-json/${widget.bookId}/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -129,14 +129,14 @@ class _ReviewListPageState extends State<ReviewListPage> {
                 if (result == true) {
                   await fetchReviews(shouldRefresh: true);
                 }
-                
-                },
-              
+
+              },
+
               child: Text('Tambah Ulasan',style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Color(0xFFB15D08)),
-                    ),
-                style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 243, 191, 58),
-            ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 243, 191, 58),
+              ),
             ),
           ],
         ),

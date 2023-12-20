@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:pustaring/ulasan/screens/login.dart';
+import 'package:pustaring/Auth/login.dart';
 import 'package:pustaring/ulasan/widgets/left_drawer.dart';
 
 class ReviewFormPage extends StatefulWidget {
@@ -127,7 +127,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                     if (request.loggedIn) {
                     if (_formKey.currentState!.validate()) {
                       final response = await request.postJson(
-                        "http://localhost:8000/ulasan/create-review-flutter/${widget.bookId}/",
+                        "https://pustaring-b05-tk.pbp.cs.ui.ac.id/ulasan/create-review-flutter/${widget.bookId}/",
                         jsonEncode(<String, dynamic>{
                           'book_id': widget.bookId,
                           'rating': _rating,
@@ -166,7 +166,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                               Navigator.pop(context);
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => LoginApp()),
+                                MaterialPageRoute(builder: (context) => LoginPBPage()),
                               );
                             },
                           ),
