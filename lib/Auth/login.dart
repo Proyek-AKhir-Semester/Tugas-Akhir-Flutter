@@ -7,6 +7,7 @@ import 'package:pustaring/Sistem%20Manajemen/screens/menu.dart';
 import 'package:pustaring/peminjaman_buku/screens/menu_pinjam.dart';
 
 import '../peminjaman_buku/screens/pinjam_buku_page.dart';
+import '../premium/beranda_premium.dart';
 
 void main() {
   runApp(const LoginPBApp());
@@ -95,7 +96,11 @@ class _LoginPBPageState extends State<LoginPBPage> {
                               if (username == "admin") {
                                 // Navigate to Sistem_Manajemen for admin user
                                 return Sistem_Manajemen();
-                              } else {
+                              }
+                              else if(username.substring(username.length-2) == "-p") {
+                                return BerandaPremiumScreen();
+                              }
+                              else {
                                 // Navigate to a different page for other users
                                 return PinjamBukuPage();
                               }
