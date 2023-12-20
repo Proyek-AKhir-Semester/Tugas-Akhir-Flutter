@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:pustaring/ulasan/screens/bookListPage.dart';
 
 import '../../Auth/login.dart';
+import '../../Customer Service/cs.dart';
 import '../../peminjaman_buku/screens/pinjam_buku_page.dart';
 import '../../peminjaman_buku/widgets/left_drawer_home.dart';
 
@@ -19,6 +20,7 @@ class _MyHomePageState extends State<Beranda> {
     ShopItem("Lihat Daftar Buku", const Color(0xFFAA5200)),
     ShopItem("Review Buku", const Color(0xFFAA5200)),
     ShopItem("Logout", const Color(0xFFAA5200)),
+    ShopItem("Customer Service", const Color(0xFFAA5200)),
   ];
 
   @override
@@ -110,7 +112,11 @@ class ShopCard extends StatelessWidget {
           } else if (feat.name == "Review Buku") {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const BookPage()));
-          } else if (feat.name == "Logout") {
+          } else if (feat.name == "Customer Service") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CSPage()));
+          }
+          else if (feat.name == "Logout") {
             final response = await request.logout(
               // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
                 "https://pustaring-b05-tk.pbp.cs.ui.ac.id/auth/logout/");

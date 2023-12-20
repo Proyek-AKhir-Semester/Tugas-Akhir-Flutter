@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:pustaring/Customer%20Service/cs.dart';
 import 'package:pustaring/Sistem Manajemen/screens/menu.dart';
 import 'package:pustaring/Sistem Manajemen/screens/shoplist_form.dart';
 import 'package:pustaring/peminjaman_buku/screens/list_buku_pinjaman.dart';
@@ -97,6 +98,19 @@ class LeftDrawerHome extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => BookPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.book),
+              title: const Text('Customer Service'),
+              onTap: () {
+                // Add your redirection logic here
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CSPage(),
                   ),
                 );
               },
