@@ -7,6 +7,8 @@ import 'package:pustaring/peminjaman_buku/screens/list_buku_pinjaman.dart';
 import 'package:pustaring/peminjaman_buku/screens/pinjam_buku_page.dart';
 
 import '../../Auth/login.dart';
+import '../../berandas/screens/home.dart';
+import '../../premium/beranda_premium.dart';
 import '../../ulasan/screens/bookListPage.dart';
 
 class LeftDrawerHome extends StatelessWidget {
@@ -56,7 +58,7 @@ class LeftDrawerHome extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PinjamBukuPage(),
+                    builder: (context) => Beranda(),
                   ),
                 );
               },
@@ -99,6 +101,21 @@ class LeftDrawerHome extends StatelessWidget {
                 );
               },
             ),
+            if (LoginPBPage.uname.substring(LoginPBPage.uname.length-2) == "-p")
+              ListTile(
+                leading: const Icon(Icons.admin_panel_settings),
+                title: const Text('Fitur Premium'),
+                onTap: () {
+                  // Handle admin option tap
+                  // For example, navigate to the admin page
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BerandaPremiumScreen(), // Replace with your admin page
+                    ),
+                  );
+                },
+              ),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('LOGOUT'),

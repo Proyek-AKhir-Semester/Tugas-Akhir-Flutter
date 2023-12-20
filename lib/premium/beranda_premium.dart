@@ -1,31 +1,51 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:pustaring/premium/pinjam_sewa_ruang.dart';
+import 'package:http/http.dart' as http;
 
-import 'book_model.dart';
+import '../models/book.dart';
+import '../peminjaman_buku/widgets/left_drawer_home.dart';
 
+class BerandaPremiumScreen extends StatefulWidget {
+  const BerandaPremiumScreen({Key? key}) : super(key: key);
 
-class BerandaPremiumScreen extends StatelessWidget {
-  const BerandaPremiumScreen({super.key});
+  @override
+  State<BerandaPremiumScreen> createState() => _BerandaPremiumScreenState();
+}
 
-  static List<BookModel> books = [
-    BookModel(
-        title: "The Forest House",
-        genre: "Fantasy",
-        summary:
-            "In the early days of the conquest, when the Roman Legions are aggressively persecuting the Druids, the sanctuary of the Goddess on the isle of Mona is destroyed and its Druids are murdered and its priestesses are raped. The raped priestesses that conceive children kill all of the girl ......"),
-    BookModel(
-        title: "The Forest House",
-        genre: "Fantasy",
-        summary:
-            "In the early days of the conquest, when the Roman Legions are aggressively persecuting the Druids, the sanctuary of the Goddess on the isle of Mona is destroyed and its Druids are murdered and its priestesses are raped. The raped priestesses that conceive children kill all of the girl ......"),
-    BookModel(
-        title: "The Forest House",
-        genre: "Fantasy",
-        summary:
-            "In the early days of the conquest, when the Roman Legions are aggressively persecuting the Druids, the sanctuary of the Goddess on the isle of Mona is destroyed and its Druids are murdered and its priestesses are raped. The raped priestesses that conceive children kill all of the girl ......"),
-  ];
+class _BerandaPremiumScreenState extends State<BerandaPremiumScreen> {
+  List<Book> books = [];
 
-  Widget bookCard(BuildContext context, BookModel book) {
+  @override
+  void initState() {
+    super.initState();
+    fetchBooks().then((bookList) {
+      setState(() {
+        books = bookList;
+      });
+    });
+  }
+
+  Future<List<Book>> fetchBooks() async {
+    var url = Uri.parse('https://pustaring-b05-tk.pbp.cs.ui.ac.id/api/books/');
+    var response = await http.get(
+      url,
+      headers: {"Content-Type": "application/json"},
+    );
+
+    var data = jsonDecode(utf8.decode(response.bodyBytes));
+    List<Book> bookList = [];
+
+    for (var item in data) {
+      bookList.add(Book.fromJson(item));
+    }
+    return bookList;
+  }
+
+  Widget bookCard(BuildContext context, Book book) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.all(10),
@@ -36,7 +56,7 @@ class BerandaPremiumScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(book.title,
+          Text(book.fields.title,
               style: TextStyle(
                 color: Color(0XFFAA5200),
                 fontSize: 18,
@@ -48,13 +68,13 @@ class BerandaPremiumScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Genre : ${book.genre}",
+                  "Genre : ${book.fields.genre}",
                   style: TextStyle(
                     color: Color(0XFFAA5200),
                   ),
                 ),
                 Text(
-                  "Summary : ${book.summary}",
+                  "Summary : ${book.fields.summary}",
                   style: TextStyle(
                     color: Color(0XFFAA5200),
                   ),
@@ -82,9 +102,9 @@ class BerandaPremiumScreen extends StatelessWidget {
                     ),
                     child: Center(
                         child: Text(
-                      "Pinjam",
-                      style: TextStyle(color: Color(0XFF4D1212)),
-                    )),
+                          "Pinjam",
+                          style: TextStyle(color: Color(0XFF4D1212)),
+                        )),
                   )),
               TextButton(
                   onPressed: () {},
@@ -98,9 +118,9 @@ class BerandaPremiumScreen extends StatelessWidget {
                     ),
                     child: Center(
                         child: Text(
-                      "Lihat Detail",
-                      style: TextStyle(color: Color(0XFF4D1212)),
-                    )),
+                          "Lihat Detail",
+                          style: TextStyle(color: Color(0XFF4D1212)),
+                        )),
                   )),
             ],
           )
@@ -111,6 +131,7 @@ class BerandaPremiumScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       backgroundColor: Color(0XFFFFF0A3),
       appBar: AppBar(
@@ -128,6 +149,7 @@ class BerandaPremiumScreen extends StatelessWidget {
               size: 32,
             )),
       ),
+      drawer: const LeftDrawerHome(),
       bottomNavigationBar: Container(
         width: MediaQuery.of(context).size.width,
         height: 53,
@@ -155,7 +177,7 @@ class BerandaPremiumScreen extends StatelessWidget {
                 child: Container(
                   width: 328,
                   child: ListView.builder(
-                    itemCount: 3,
+                    itemCount: books.length,
                     itemBuilder: (context, index) {
                       return bookCard(context, books[index]);
                     },

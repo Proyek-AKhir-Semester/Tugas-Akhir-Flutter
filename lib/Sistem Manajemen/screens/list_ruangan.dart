@@ -98,7 +98,7 @@ class _RuangPageState extends State<RuangPage> {
                             child: ElevatedButton(
                               onPressed: () {
                                 var url = Uri.parse(
-                                    'https://pustaring-b05-tk.pbp.cs.ui.ac.id/sistem_manajemen/edit_ketersediaan/${snapshot.data![index].pk}');
+                                    'https://pustaring-b05-tk.pbp.cs.ui.ac.id/sistem_manajemen/edit_ketersediaan/${snapshot.data![index].pk}/');
                                 http.get(url);
                                 setState(() {});
                               },

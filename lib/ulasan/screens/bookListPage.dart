@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pustaring/ulasan/screens/bookDetailPage.dart';
 import 'dart:convert';
-import 'package:pustaring/ulasan/widgets/left_drawer.dart';
 
+import '../../berandas/beranda/widgets/drawer.dart';
 import '../../models/book.dart';
 
 class BookPage extends StatefulWidget {
@@ -43,7 +43,7 @@ class _BookPageState extends State<BookPage> {
         foregroundColor: const Color(0xFFFFF0A3),
 
       ),
-      drawer: const LeftDrawer(),
+      drawer: const LeftDrawerHome(),
       backgroundColor: const Color(0xFFFFF0A3),
       body: FutureBuilder(
         future: fetchBook(),

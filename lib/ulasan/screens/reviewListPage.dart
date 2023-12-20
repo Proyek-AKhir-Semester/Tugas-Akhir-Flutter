@@ -5,6 +5,8 @@ import 'package:pustaring/ulasan/models/product.dart';
 import 'package:pustaring/ulasan/screens/reviewFormPage.dart';
 import 'package:pustaring/ulasan/widgets/left_drawer.dart';
 
+import '../../berandas/beranda/widgets/drawer.dart';
+
 class ReviewListPage extends StatefulWidget {
   final int bookId;
   const ReviewListPage({Key? key, required this.bookId}) : super(key: key);
@@ -47,7 +49,7 @@ class _ReviewListPageState extends State<ReviewListPage> {
         backgroundColor: const Color(0xFFAA5200),
         foregroundColor: const Color(0xFFFFF0A3),
       ),
-      drawer: const LeftDrawer(),
+      drawer: const LeftDrawerHome(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

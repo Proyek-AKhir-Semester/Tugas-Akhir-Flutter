@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:pustaring/Auth/login.dart';
-import 'package:pustaring/ulasan/widgets/left_drawer.dart';
+
+import '../../berandas/beranda/widgets/drawer.dart';
 
 class ReviewFormPage extends StatefulWidget {
   final int bookId;
@@ -38,7 +39,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
         backgroundColor: const Color(0xFFAA5200),
         foregroundColor: const Color(0xFFFFF0A3),
       ),
-      drawer: const LeftDrawer(),
+      drawer: const LeftDrawerHome(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

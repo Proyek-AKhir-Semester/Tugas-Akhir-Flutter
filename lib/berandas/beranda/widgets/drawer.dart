@@ -6,12 +6,13 @@ import 'package:pustaring/Sistem Manajemen/screens/shoplist_form.dart';
 import 'package:pustaring/peminjaman_buku/screens/list_buku_pinjaman.dart';
 import 'package:pustaring/peminjaman_buku/screens/pinjam_buku_page.dart';
 
-import '../../Auth/login.dart';
-import '../../berandas/screens/home.dart';
-import '../../ulasan/screens/bookListPage.dart';
+import '../../../Auth/login.dart';
+import '../../../ulasan/screens/bookListPage.dart';
+import '../../screens/home.dart';
 
-class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({super.key});
+
+class LeftDrawerHome extends StatelessWidget {
+  const LeftDrawerHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class LeftDrawer extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginPBPage(),
+                    builder: (context) => PinjamBukuPage(),
                   ),
                 );
               },
