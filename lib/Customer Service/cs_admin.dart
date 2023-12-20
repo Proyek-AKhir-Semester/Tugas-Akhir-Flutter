@@ -71,7 +71,9 @@ class _CSAdminPageState extends State<CSAdminPage> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text("${snapshot.data![index].fields.reportDate}"),
+                      Text("Oleh ${snapshot.data![index].fields.username}", style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 10),
+                      Text("${snapshot.data![index].fields.reportDate}", style: const TextStyle(fontSize: 14)),
                       const SizedBox(height: 10),
                       if (snapshot.data![index].fields.status != 'DONE')
                         ElevatedButton(
@@ -82,7 +84,7 @@ class _CSAdminPageState extends State<CSAdminPage> {
                             await request.postJson(link, jsonEncode(<String, int>{'id': snapshot.data![index].pk}));
                             String msg = snapshot.data![index].fields.status == 'REQUESTED' ? 'dikonfirmasi' : 'diselesaikan';
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text('Laporan ${snapshot.data![index].pk} berhasil $msg!'),
+                              content: Text('Laporan ${snapshot.data![index].pk} berhasil $msg!', style: const TextStyle(fontSize: 16)),
                             ));
                             setState(() {
                               if (snapshot.data![index].fields.status =='REQUESTED') {

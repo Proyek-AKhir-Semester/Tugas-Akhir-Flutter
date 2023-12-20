@@ -137,10 +137,10 @@ class _CSPageState extends State<CSPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 9),
-                          Text("${snapshot.data![index].fields.reportDate}"),
-                          const SizedBox(height: 15),
-                          Text("${snapshot.data![index].fields.message}")
+                          const SizedBox(height: 10),
+                          Text("${snapshot.data![index].fields.reportDate}", style: const TextStyle(fontSize: 14)),
+                          const SizedBox(height: 10),
+                          Text("${snapshot.data![index].fields.message}", style: const TextStyle(fontSize: 16))
                         ],
                       ),
                     )

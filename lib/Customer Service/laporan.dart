@@ -5,6 +5,7 @@ import 'package:pustaring/peminjaman_buku/models/PinjamBuku.dart';
 import '../../Auth/login.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:pustaring/Customer Service/cs.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({Key? key}) : super(key: key);
@@ -14,7 +15,6 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  String selectedValue = "Status";
   Map<int, int> statusMap = {};
   String username = LoginPBPage.uname;
   Future<List<Peminjaman>> fetchData() async {
@@ -24,8 +24,12 @@ class _ReportPageState extends State<ReportPage> {
     List<Peminjaman> pinjamanList = [];
     for (var item in data) {
       Peminjaman p = Peminjaman.fromJson(item);
-      pinjamanList.add(Peminjaman.fromJson(item));
-      statusMap[p.pk] = 0;
+      if (p.fields.statusAcc) {
+        pinjamanList.add(Peminjaman.fromJson(item));
+        if (!statusMap.containsKey(p.pk)) {
+          statusMap[p.pk] = 0;
+        }
+      }
     }
     return pinjamanList;
   }
@@ -41,27 +45,48 @@ class _ReportPageState extends State<ReportPage> {
       ),
       backgroundColor: const Color.fromARGB(255, 102, 99, 82),
       body: Column(children: [
-        ElevatedButton(
-          onPressed: () async {
-            List<int> brokens = [], losts = [];
-            statusMap.forEach((key, value) {
-              if (value == 1) {
-                brokens.add(key);
-              } else if (value == 2) {
-                losts.add(key);
-              }
-              if (brokens.length + losts.length > 0) {
-                final response = request.postJson("http://127.0.0.1:8000/customer_service/add_report_flutter/",
-                  jsonEncode(<String, String>{
-                    'username': username,
-                    'losts': jsonEncode(losts),
-                    'brokens': jsonEncode(brokens)
-                  })
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => const CSPage()
+                  )
                 );
-              }
-            });
-          },
-          child: const Text('Buat Laporan')
+              },
+              child: const Text("Kembali")
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                List<int> brokens = [], losts = [];
+                statusMap.forEach((key, value) {
+                  if (value == 1) {
+                    brokens.add(key);
+                  } else if (value == 2) {
+                    losts.add(key);
+                  }
+                  if (brokens.length + losts.length > 0) {
+                    final response = request.postJson("http://127.0.0.1:8000/customer_service/add_report_flutter/",
+                      jsonEncode(<String, String>{
+                        'username': username,
+                        'losts': jsonEncode(losts),
+                        'brokens': jsonEncode(brokens)
+                      })
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text("Laporan telah dibuat!"),
+                    ));
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) => const CSPage()
+                      )
+                    );
+                  }
+                });
+              },
+              child: const Text('Buat Laporan')
+            )
+          ]
         ),
         Expanded(child: FutureBuilder(
           future: fetchData(),
@@ -94,14 +119,14 @@ class _ReportPageState extends State<ReportPage> {
                           )
                         ),
                         const SizedBox(height: 9),
-                        Text("${snapshot.data![index].fields.tanggalPeminjaman}"),
+                        Text("Dipinjam pada ${snapshot.data![index].fields.tanggalPeminjaman}"),
                         const SizedBox(height: 15),
-                        DropdownButton<String>(
+                        DropdownButtonFormField<String>(
                           hint: const Text('Opsi'),
-                          value: selectedValue,
+                          value: 'Status',
                           onChanged: (newValue) {
                             setState(() {
-                              selectedValue = newValue!;
+                              String selectedValue = newValue!;
                               if (selectedValue == 'Rusak') {
                                 statusMap[snapshot.data![index].pk] = 1;
                               } else if (selectedValue == 'Hilang') {
