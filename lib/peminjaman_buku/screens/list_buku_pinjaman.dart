@@ -9,6 +9,8 @@ import 'login_pb.dart';
 class ListBukuPinjaman extends StatefulWidget {
   const ListBukuPinjaman({Key? key}) : super(key: key);
 
+
+
   @override
   _ListBukuPinjamanState createState() => _ListBukuPinjamanState();
 }
@@ -46,6 +48,9 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
 
   @override
   Widget build(BuildContext context) {
+    String _formatDate(DateTime date) {
+      return "${date.day}-${date.month}-${date.year}";
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Buku Pinjaman'),
@@ -93,7 +98,7 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                             ),
                           ),
                           Text(
-                            "Tanggal Peminjaman : ${snapshot.data![index].fields.tanggalPeminjaman}",
+                            "Tanggal Peminjaman: ${_formatDate(snapshot.data![index].fields.tanggalPeminjaman)}",
                             style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.normal,
@@ -101,7 +106,7 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                             ),
                           ),
                           Text(
-                            "Tanggal Pengembalian : ${snapshot.data![index].fields.tanggalPengembalian}",
+                            "Tanggal Pengembalian: ${_formatDate(snapshot.data![index].fields.tanggalPengembalian)}",
                             style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.normal,
@@ -148,7 +153,9 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('OK'),
+                                          child: Text(
+                                              'OK'
+                                          ),
                                         ),
                                       ],
                                     );

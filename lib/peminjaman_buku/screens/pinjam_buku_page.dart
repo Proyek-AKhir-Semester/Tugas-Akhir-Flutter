@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:pustaring/peminjaman_buku/screens/detail_buku.dart';
 import 'package:pustaring/peminjaman_buku/widgets/left_drawer_home.dart';
 import '../../models/book.dart';
+import 'package:pustaring/peminjaman_buku/screens/list_buku_pinjaman.dart';
 import 'login_pb.dart';
 
 class PinjamBukuPage extends StatefulWidget {
@@ -43,6 +44,7 @@ class _PinjamBukuPageState extends State<PinjamBukuPage> {
 
   Future<void> createPinjamBuku(String username, String buku, String tanggalPeminjaman, String tanggalPengembalian) async {
     final url = 'http://127.0.0.1:8000/create_pinjam_buku/';
+
 
     final response = await http.post(
       Uri.parse(url),
@@ -231,7 +233,13 @@ class _PinjamBukuPageState extends State<PinjamBukuPage> {
                                                 .showSnackBar(const SnackBar(
                                               content: Text("Item baru berhasil disimpan!"),
                                             ));
-                                          } else {
+                                          } else if (response['status'] == 'duplicate'){
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                              content: Text("Buku ini sudah anda pinjam"),
+                                            ));
+                                          }
+                                          else {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(
                                               content:
