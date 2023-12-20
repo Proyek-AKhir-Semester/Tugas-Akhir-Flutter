@@ -141,13 +141,18 @@ class _BerandaPremiumScreenState extends State<BerandaPremiumScreen> {
           style: TextStyle(color: Color(0XFFFFF0A3), fontSize: 20),
         ),
         centerTitle: true,
-        leading: IconButton(
-            onPressed: () {},
+        leading: Builder(
+          builder: (context) => IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
             icon: Icon(
               Icons.menu_rounded,
               color: Color(0XFFFFF0A3),
               size: 32,
-            )),
+            ),
+          ),
+        ),
       ),
       drawer: const LeftDrawerHome(),
       bottomNavigationBar: Container(
