@@ -1,3 +1,5 @@
+[pustaring](https://install.appcenter.ms/orgs/tugas-akhir-flutter/apps/pustaring/distribution_groups/public)
+
 [![Build status](https://build.appcenter.ms/v0.1/apps/a531c446-0fc8-4ba3-aaba-7aab2474c014/branches/main/badge)](https://appcenter.ms)
 # Tugas-Akhir-Flutter
 
