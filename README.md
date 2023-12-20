@@ -17,7 +17,7 @@ Pustaring, perpustakaan daring yang bertujuan untuk mempromosikan literasi, memb
 - **Beranda (Ruizhi Davin)**<br>Menampilkan beranda buku dengan filter yang memungkinkan pengguna menemukan buku yang sesuai dengan minat mereka.
 - **Customer Service (Maulana Seto)**<br>Pengguna yang telah masuk dapat mengakses layanan pelaporan atau pengaduan.
 - **Peminjaman Buku (Luhur Budi Arbilianto)**<br>Pengguna yang telah masuk dapat melakukan peminjaman buku.
-- **Sistem Manajemen (Rhaken Shaquille Akbar Yanuanda)**<br>Pegawai dapat mengelola persetujuan peminjaman buku dan penyewaan ruangan serta mengelola stok buku.
+- **Sistem Manajemen (Rhaken Shaquille Akbar Yanuanda)**<br>Pegawai dapat mengelola persetujuan peminjaman buku dan penyewaan ruangan serta mengelola stok buku. (dapat diakses dengan login dengan username : admin dan password : adminganteng
 - **Fitur Premium (Amanda Oktivia Sharfina)**<br>Pengguna premium dapat menyewa ruangan, mengakses buku-buku khusus, dan memiliki durasi peminjaman yang lebih lama.
 
 ## Peran Pengguna
@@ -28,9 +28,7 @@ Pustaring, perpustakaan daring yang bertujuan untuk mempromosikan literasi, memb
 
 ## Alur Pengintegrasian
 1. Laman web PTS yang telah di-*deploy* akan diatur agar memiliki *backend* yang dapat menampilkan data-data terkait dalam format JSON. 
-2. Membuat berkas bernama `fetch.dart` dalam folder `utils` di modul `apps` masing-masing anggota untuk mengakses data JSON dari *backend* secara asinkronus. Berkas `fetch.dart` dilengkapi dengan fungsi yang dapat dipanggil untuk mengembalikan data yang diperlukan dalam suatu *list*. 
-3. Fungsi di dalam berkas `fetch.dart` memiliki *url* yang dapat digunakan sebagai *endpoint* JSON untuk mengintegrasi aplikasi.
-4. Pemanggilan fungsi dilakukan di *widget* untuk diolah sesuai dengan kebutuhan fitur dari masing-masing modul.
+2. Pemanggilan fungsi dilakukan di *widget* untuk diolah sesuai dengan kebutuhan fitur dari masing-masing modul.
 
 ## Berita Acara
 https://docs.google.com/spreadsheets/d/171DiVqzsgO_UzHdiebzTAQt6rMUklaqAm-gg-xunmzM/edit?usp=sharing 
