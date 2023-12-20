@@ -18,7 +18,7 @@ class _RuangPageState extends State<RuangPage> {
   Future<List<Ruangan>> fetchRuangan() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var url = Uri.parse(
-        'http://127.0.0.1:8000/sistem_manajemen/get-ruangan/');
+        'https://pustaring-b05-tk.pbp.cs.ui.ac.id/sistem_manajemen/get-ruangan/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -98,7 +98,7 @@ class _RuangPageState extends State<RuangPage> {
                             child: ElevatedButton(
                               onPressed: () {
                                 var url = Uri.parse(
-                                    'http://127.0.0.1:8000/sistem_manajemen/edit_ketersediaan/${snapshot.data![index].pk}');
+                                    'https://pustaring-b05-tk.pbp.cs.ui.ac.id/sistem_manajemen/edit_ketersediaan/${snapshot.data![index].pk}');
                                 http.get(url);
                                 setState(() {});
                               },

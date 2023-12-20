@@ -16,7 +16,7 @@ class ReviewListPage extends StatefulWidget {
 class _ReviewListPageState extends State<ReviewListPage> {
   Future<List<Product>> fetchReviews({bool shouldRefresh = false}) async {
     List<Product> _reviews = [];
-    var url = Uri.parse('http://127.0.0.1:8000/ulasan/get-reviews-json/${widget.bookId}/');
+    var url = Uri.parse('https://pustaring-b05-tk.pbp.cs.ui.ac.id/ulasan/get-reviews-json/${widget.bookId}/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},

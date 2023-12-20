@@ -9,6 +9,8 @@ import '';
 class ListBukuPinjaman extends StatefulWidget {
   const ListBukuPinjaman({Key? key}) : super(key: key);
 
+
+
   @override
   _ListBukuPinjamanState createState() => _ListBukuPinjamanState();
 }
@@ -25,7 +27,7 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
     String username = LoginPBPage.uname;
 
     // Ganti URL dengan URL endpoint yang sesuai di backend Django
-    var url = Uri.parse('http://127.0.0.1:8000/peminjaman_buku/list_buku_flutter/$username/');
+    var url = Uri.parse('https://pustaring-b05-tk.pbp.cs.ui.ac.id/peminjaman_buku/list_buku_flutter/$username/');
 
     var response = await http.get(
       url,
@@ -34,18 +36,21 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
       },
     );
 
-      var data = jsonDecode(utf8.decode(response.bodyBytes));
-      List<Peminjaman> pinjamanList = [];
+    var data = jsonDecode(utf8.decode(response.bodyBytes));
+    List<Peminjaman> pinjamanList = [];
 
-      for (var item in data) {
-        pinjamanList.add(Peminjaman.fromJson(item));
-      }
-      return pinjamanList;
+    for (var item in data) {
+      pinjamanList.add(Peminjaman.fromJson(item));
+    }
+    return pinjamanList;
 
   }
 
   @override
   Widget build(BuildContext context) {
+    String _formatDate(DateTime date) {
+      return "${date.day}-${date.month}-${date.year}";
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Daftar Buku Pinjaman'),
@@ -96,7 +101,7 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                             ),
                           ),
                           Text(
-                            "Tanggal Peminjaman : ${snapshot.data![index].fields.tanggalPeminjaman}",
+                            "Tanggal Peminjaman: ${_formatDate(snapshot.data![index].fields.tanggalPeminjaman)}",
                             style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.normal,
@@ -104,7 +109,7 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                             ),
                           ),
                           Text(
-                            "Tanggal Pengembalian : ${snapshot.data![index].fields.tanggalPengembalian}",
+                            "Tanggal Pengembalian: ${_formatDate(snapshot.data![index].fields.tanggalPengembalian)}",
                             style: const TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.normal,
@@ -118,7 +123,7 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                             onPressed: () {
                               if (snapshot.data![index].fields.statusAcc) {
                                 var url = Uri.parse(
-                                    'http://127.0.0.1:8000/peminjaman_buku/kembalikan_buku/${snapshot.data![index].fields.buku}/');
+                                    'https://pustaring-b05-tk.pbp.cs.ui.ac.id/peminjaman_buku/kembalikan_buku/${snapshot.data![index].fields.buku}/');
                                 var response = http.get(url);
                                 setState(() {});
 
@@ -127,17 +132,13 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text('Buku Berhasil Dikembalikan', style: const TextStyle(
-                                        color: Color(0xFFB15D08),
-                                      ),),
+                                      title: Text('Buku Berhasil Dikembalikan'),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('OK', style: const TextStyle(
-                                            color: Color(0xFFB15D08),
-                                          ),),
+                                          child: Text('OK'),
                                         ),
                                       ],
                                     );
@@ -149,17 +150,15 @@ class _ListBukuPinjamanState extends State<ListBukuPinjaman> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text('Buku Belum Diacc', style: const TextStyle(
-                                        color: Color(0xFFB15D08),
-                                      ),),
+                                      title: Text('Buku Belum Diacc'),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('OK', style: const TextStyle(
-                                            color: Color(0xFFB15D08),
-                                          ),),
+                                          child: Text(
+                                              'OK'
+                                          ),
                                         ),
                                       ],
                                     );

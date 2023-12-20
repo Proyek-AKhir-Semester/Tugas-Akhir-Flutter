@@ -79,7 +79,7 @@ class _LoginPBPageState extends State<LoginPBPage> {
                     LoginPBPage.uname = username;
                     String password = _passwordController.text;
 
-                    final response = await request.login("http://127.0.0.1:8000/auth/login/", {
+                    final response = await request.login("https://pustaring-b05-tk.pbp.cs.ui.ac.id/auth/login/", {
                       'username': username,
                       'password': password,
                     });

@@ -127,7 +127,7 @@ class _ReviewFormPageState extends State<ReviewFormPage> {
                     if (request.loggedIn) {
                     if (_formKey.currentState!.validate()) {
                       final response = await request.postJson(
-                        "http://127.0.0.1:8000/ulasan/create-review-flutter/${widget.bookId}/",
+                        "https://pustaring-b05-tk.pbp.cs.ui.ac.id/ulasan/create-review-flutter/${widget.bookId}/",
                         jsonEncode(<String, dynamic>{
                           'book_id': widget.bookId,
                           'rating': _rating,

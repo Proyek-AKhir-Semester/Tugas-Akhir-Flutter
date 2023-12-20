@@ -23,7 +23,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
   Future<List<Peminjaman>> fetchPeminjaman() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
     var url = Uri.parse(
-        'http://127.0.0.1:8000/sistem_manajemen/get-peminjaman/');
+        'https://pustaring-b05-tk.pbp.cs.ui.ac.id/sistem_manajemen/get-peminjaman/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -45,6 +45,9 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    String _formatDate(DateTime date) {
+      return "${date.day}-${date.month}-${date.year}";
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("List Peminjaman : ${widget.item.fields.title}"),
@@ -82,7 +85,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Tanggal Peminjaman : ${snapshot.data![index].fields.tanggalPeminjaman}",
+                                    "Tanggal Peminjaman : ${_formatDate(snapshot.data![index].fields.tanggalPeminjaman)}",
                                     style: const TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
@@ -90,7 +93,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    "Tanggal Pengembalian : ${snapshot.data![index].fields.tanggalPengembalian}",
+                                    "Tanggal Pengembalian :${_formatDate(snapshot.data![index].fields.tanggalPengembalian)}",
                                     style: const TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
@@ -100,7 +103,7 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
                                   ElevatedButton(
                                     onPressed: () {
                                       var url = Uri.parse(
-                                          'http://127.0.0.1:8000/sistem_manajemen/edit_peminjaman/${snapshot.data![index].pk}');
+                                          'https://pustaring-b05-tk.pbp.cs.ui.ac.id/sistem_manajemen/edit_peminjaman/${snapshot.data![index].pk}');
                                       http.get(url);
                                       setState(() {});
                                     },

@@ -7,6 +7,7 @@ import 'package:pustaring/peminjaman_buku/screens/detail_buku.dart';
 import 'package:pustaring/peminjaman_buku/widgets/left_drawer_home.dart';
 import '../../Auth/login.dart';
 import '../../models/book.dart';
+import 'package:pustaring/peminjaman_buku/screens/list_buku_pinjaman.dart';
 
 class PinjamBukuPage extends StatefulWidget {
   const PinjamBukuPage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _PinjamBukuPageState extends State<PinjamBukuPage> {
   String selectedGenre = 'All'; // Default selected genre
 
   Future<List<Book>> fetchBooks() async {
-    var url = Uri.parse('http://127.0.0.1:8000/api/books/');
+    var url = Uri.parse('https://pustaring-b05-tk.pbp.cs.ui.ac.id/api/books/');
     var response = await http.get(
       url,
       headers: {"Content-Type": "application/json"},
@@ -42,7 +43,8 @@ class _PinjamBukuPageState extends State<PinjamBukuPage> {
   }
 
   Future<void> createPinjamBuku(String username, String buku, String tanggalPeminjaman, String tanggalPengembalian) async {
-    final url = 'http://127.0.0.1:8000/create_pinjam_buku/';
+    final url = 'https://pustaring-b05-tk.pbp.cs.ui.ac.id/create_pinjam_buku/';
+
 
     final response = await http.post(
       Uri.parse(url),
@@ -104,7 +106,7 @@ class _PinjamBukuPageState extends State<PinjamBukuPage> {
                       });
                     },
                     items: <String>['All', 'fantasy', 'science', 'crime', 'history',
-                                  'horror', 'thriller', 'psychology', 'romance', 'sports', 'travel'] // Add your genres here
+                      'horror', 'thriller', 'psychology', 'romance', 'sports', 'travel'] // Add your genres here
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -218,26 +220,32 @@ class _PinjamBukuPageState extends State<PinjamBukuPage> {
                                         primary: Color(0xFFB15D08),
                                       ),
                                       onPressed: () async {
-                                          // Kirim ke Django dan tunggu respons
-                                          // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-                                          final response = await request.postJson(
-                                              "http://127.0.0.1:8000/peminjaman_buku/create_pinjam_buku/",
-                                              jsonEncode(<String, String>{
-                                                'username' : LoginPBPage.uname,
-                                                'buku': snapshot.data![index].fields.title,
-                                              }));
-                                          if (response['status'] == 'success') {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                              content: Text("Item baru berhasil disimpan!"),
-                                            ));
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                              content:
-                                              Text("Terdapat kesalahan, silakan coba lagi."),
-                                            ));
-                                          }
+                                        // Kirim ke Django dan tunggu respons
+                                        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                                        final response = await request.postJson(
+                                            "https://pustaring-b05-tk.pbp.cs.ui.ac.id/peminjaman_buku/create_pinjam_buku/",
+                                            jsonEncode(<String, String>{
+                                              'username' : LoginPBPage.uname,
+                                              'buku': snapshot.data![index].fields.title,
+                                            }));
+                                        if (response['status'] == 'success') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                            content: Text("Item baru berhasil disimpan!"),
+                                          ));
+                                        } else if (response['status'] == 'duplicate'){
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                            content: Text("Buku ini sudah anda pinjam"),
+                                          ));
+                                        }
+                                        else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                            content:
+                                            Text("Terdapat kesalahan, silakan coba lagi."),
+                                          ));
+                                        }
                                       },
                                       child: const Text(
                                         'Pinjam Buku',
