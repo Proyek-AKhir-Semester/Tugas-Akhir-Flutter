@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:pustaring/Customer Service/models/product.dart';
 import 'package:pustaring/peminjaman_buku/models/PinjamBuku.dart';
-import 'package:pustaring/peminjaman_buku/screens/list_buku_pinjaman.dart';
+import '../../Auth/login.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({Key? key}) : super(key: key);
@@ -13,36 +14,117 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  Future<List<Report>> fetchReport() async {
-    // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-    var url = Uri.parse('http://<URL_APP_KAMU>/json/');
-    var response =
-        await http.get(url, headers: {"Content-Type": "application/json"});
-
-    // melakukan decode response menjadi bentuk json
+  String selectedValue = "";
+  Map<int, int> statusMap = {};
+  String username = '';
+  Future<List<Peminjaman>> fetchData() async {
+    username = LoginPBPage.uname;
+    var url = Uri.parse('http://127.0.0.1:8000/peminjaman_buku/list_buku_flutter/$username/');
+    var response = await http.get(url, headers: {"Content-Type": "application/json"});
     var data = jsonDecode(utf8.decode(response.bodyBytes));
-
-    // melakukan konversi data json menjadi object Product
-    List<Report> reports = [];
-    for (var d in data) {
-      if (d != null) {
-        reports.add(Report.fromJson(d));
-      }
+    List<Peminjaman> pinjamanList = [];
+    for (var item in data) {
+      pinjamanList.add(Peminjaman.fromJson(item));
+      statusMap[item.pk] = 0;
     }
-    return reports;
+    return pinjamanList;
   }
 
   @override
   Widget build(BuildContext context) {
-    ListBukuPinjaman lsb = ListBukuPinjaman();
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daftar Buku Pinjaman'),
+        title: const Text('Buat Laporan'),
         backgroundColor: const Color(0xFFAA5200),
         foregroundColor: const Color(0xFFFFF0A3),
       ),
       backgroundColor: const Color.fromARGB(255, 102, 99, 82),
-      
+      body: Column(children: [
+        ElevatedButton(
+          onPressed: () async {
+            List<int> brokens = [], losts = [];
+            statusMap.forEach((key, value) {
+              if (value == 1) {
+                brokens.add(key);
+              } else if (value == 2) {
+                losts.add(key);
+              }
+              if (brokens.length + losts.length > 0) {
+                final response = request.postJson("http://127.0.0.1:8000/customer_service/add_report_flutter/",
+                  jsonEncode(<String, String>{
+                    'username': username,
+                    'losts': jsonEncode(losts),
+                    'brokens': jsonEncode(brokens)
+                  })
+                );
+              }
+            });
+          },
+          child: const Text('Buat Laporan')
+        ),
+        Expanded(child: FutureBuilder(
+          future: fetchData(),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              if (!snapshot.hasData) {
+                return const Column(
+                  children: [
+                    Text("Tidak ada data produk.", style: TextStyle(color: Color(0xff59A5D8), fontSize: 20)),
+                    SizedBox(height: 8),
+                  ],
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (_, index) => Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.all(20.0),
+                    color: const Color(0xFFFFDD5E),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("${snapshot.data![index].fields.buku}",
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          )
+                        ),
+                        const SizedBox(height: 9),
+                        Text("${snapshot.data![index].fields.tanggalPeminjaman}"),
+                        const SizedBox(height: 15),
+                        DropdownButton<String>(
+                          hint: const Text('Opsi'),
+                          value: selectedValue,
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedValue = newValue!;
+                              if (selectedValue == 'Rusak') {
+                                statusMap[snapshot.data![index].pk] = 1;
+                              } else if (selectedValue == 'Hilang') {
+                                statusMap[snapshot.data![index].pk] = 2;
+                              }
+                            });
+                          },
+                          items: <String>['Rusak', 'Hilang'].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList()
+                        )
+                      ]
+                    )
+                  )
+                );
+              }
+            }
+          }
+        ))
+      ])
     );
   }
 }

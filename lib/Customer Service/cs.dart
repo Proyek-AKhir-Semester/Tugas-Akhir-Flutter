@@ -43,14 +43,12 @@ class _CSPageState extends State<CSPage> {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ReportPage(),
-                  ),
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => const ReportPage()
+                  )
                 );
               },
-              child: const Text('Buat Laporan'),
+              child: const Text('Buat Laporan')
             ),
             ElevatedButton(
               onPressed: () {
@@ -85,22 +83,22 @@ class _CSPageState extends State<CSPage> {
                               final response = await request.postJson(
                                 'http://127.0.0.1:8000/customer_service/add_complaint_flutter/',
                                 jsonEncode(<String, String>{'description': complaint}));
-                                if (response.status == 200) {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: const Text("Aduan berhasil dikirim!"),
-                                  ));
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: const Text("Aduan gagal dikirim!"),
-                                  ));  
-                                }
+                              if (response.status == 200) {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: const Text("Aduan berhasil dikirim!"),
+                                ));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: const Text("Aduan gagal dikirim!"),
+                                ));  
+                              }
                             }
                             Navigator.pop(context);
-                          },
-                        ),
+                          }
+                        )
                       ],
                     );
-                  },
+                  }
                 );
               },
               child: const Text('Buat Aduan'),

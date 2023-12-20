@@ -55,7 +55,7 @@ class _LoginPBPageState extends State<LoginPBPage> {
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(
-                labelText: 'Username',
+                labelText: 'Nama Pengguna',
               ),
             ),
             const SizedBox(height: 12.0),
