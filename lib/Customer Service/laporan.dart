@@ -14,18 +14,18 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  String selectedValue = "";
+  String selectedValue = "Status";
   Map<int, int> statusMap = {};
-  String username = '';
+  String username = LoginPBPage.uname;
   Future<List<Peminjaman>> fetchData() async {
-    username = LoginPBPage.uname;
     var url = Uri.parse('http://127.0.0.1:8000/peminjaman_buku/list_buku_flutter/$username/');
     var response = await http.get(url, headers: {"Content-Type": "application/json"});
     var data = jsonDecode(utf8.decode(response.bodyBytes));
     List<Peminjaman> pinjamanList = [];
     for (var item in data) {
+      Peminjaman p = Peminjaman.fromJson(item);
       pinjamanList.add(Peminjaman.fromJson(item));
-      statusMap[item.pk] = 0;
+      statusMap[p.pk] = 0;
     }
     return pinjamanList;
   }
@@ -109,7 +109,7 @@ class _ReportPageState extends State<ReportPage> {
                               }
                             });
                           },
-                          items: <String>['Rusak', 'Hilang'].map<DropdownMenuItem<String>>((String value) {
+                          items: <String>['Status','Rusak', 'Hilang'].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),

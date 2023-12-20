@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:pustaring/Auth/register.dart';
 import 'package:pustaring/Sistem%20Manajemen/screens/menu.dart';
 import 'package:pustaring/peminjaman_buku/screens/menu_pinjam.dart';
+import 'package:pustaring/Customer Service/cs.dart';
 
 import '../peminjaman_buku/screens/pinjam_buku_page.dart';
 
@@ -55,7 +56,7 @@ class _LoginPBPageState extends State<LoginPBPage> {
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(
-                labelText: 'Nama Pengguna',
+                labelText: 'Username',
               ),
             ),
             const SizedBox(height: 12.0),
@@ -98,7 +99,7 @@ class _LoginPBPageState extends State<LoginPBPage> {
                                 return Sistem_Manajemen();
                               } else {
                                 // Navigate to a different page for other users
-                                return PinjamBukuPage();
+                                return CSPage();
                               }
                             },
                           ),
