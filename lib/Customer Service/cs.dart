@@ -2,79 +2,157 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pustaring/Customer Service/models/product.dart';
+import 'package:pustaring/Customer Service/laporan.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
-class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+class CSPage extends StatefulWidget {
+  const CSPage({Key? key}) : super(key: key);
 
   @override
-  _ProductPageState createState() => _ProductPageState();
+  _CSPageState createState() => _CSPageState();
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _CSPageState extends State<CSPage> {
   Future<List<Report>> fetchReport() async {
-    // TODO
     var url = Uri.parse('http://127.0.0.1:8000/customer_service/json/');
     var response = await http.get(url, headers: {"Content-Type": "application/json"});
-
-    // melakukan decode response menjadi bentuk json
     var data = jsonDecode(utf8.decode(response.bodyBytes));
-
-    // melakukan konversi data json menjadi object Product
     List<Report> reports = [];
     for (var d in data) {
       if (d != null) {
         reports.add(Report.fromJson(d));
       }
     }
-    return reports;
+    return reports.reversed.toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController textFieldController = TextEditingController();
+    final request = context.watch<CookieRequest>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Laporan')),
-      body: FutureBuilder(
-        future: fetchReport(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.data == null) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            if (!snapshot.hasData) {
-              return const Column(
-                children: [
-                  Text("Tidak ada data produk.", style: TextStyle(color: Color(0xff59A5D8), fontSize: 20)),
-                  SizedBox(height: 8),
-                ],
-              );
-            } else {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (_, index) => Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Laporan ${snapshot.data![index].pk}",
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
+      appBar: AppBar(
+        title: const Text('Laporan'),
+        backgroundColor: const Color(0xFFAA5200),
+        foregroundColor: const Color(0xFFFFF0A3)),
+      backgroundColor: const Color(0xFFFFF0A3),
+      body: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReportPage(),
+                  ),
+                );
+              },
+              child: const Text('Buat Laporan'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Buat Aduan'),
+                      content: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextField(
+                              controller: textFieldController,
+                              decoration: const InputDecoration(
+                                labelText: 'Masukkan aduan Anda!',
+                                hintText: 'Ketik di sini...',
+                                border: OutlineInputBorder(),
+                              ),
+                              maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text("${snapshot.data![index].fields.reportDate}"),
-                      const SizedBox(height: 10),
-                      Text("${snapshot.data![index].fields.message}")
+                      actions: [
+                        TextButton(
+                          child: const Text('Kirim'),
+                          onPressed: () async {
+                            String complaint = textFieldController.text;
+                            if (!(complaint.isEmpty || complaint.trim().isEmpty)) {
+                              final response = await request.postJson(
+                                'http://127.0.0.1:8000/customer_service/add_complaint_flutter/',
+                                jsonEncode(<String, String>{'description': complaint}));
+                                if (response.status == 200) {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: const Text("Aduan berhasil dikirim!"),
+                                  ));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: const Text("Aduan gagal dikirim!"),
+                                  ));  
+                                }
+                            }
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text('Buat Aduan'),
+            ),
+          ],
+        ),
+        Expanded(
+          child: FutureBuilder(
+            future: fetchReport(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.data == null) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                if (!snapshot.hasData) {
+                  return const Column(
+                    children: [
+                      Text("Tidak ada data produk.", style: TextStyle(color: Color(0xff59A5D8), fontSize: 20)),
+                      SizedBox(height: 8),
                     ],
-                  ),
-                )
-              );
+                  );
+                } else {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (_, index) => Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.all(20.0),
+                      color: const Color(0xFFFFDD5E),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Laporan ${snapshot.data![index].pk}",
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 9),
+                          Text("${snapshot.data![index].fields.reportDate}"),
+                          const SizedBox(height: 15),
+                          Text("${snapshot.data![index].fields.message}")
+                        ],
+                      ),
+                    )
+                  );
+                }
+              }
             }
-          }
-        }
-      )
+          )
+        ),
+      ]),
     );
   }
 }
