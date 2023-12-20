@@ -21,7 +21,6 @@ Pustaring, perpustakaan daring yang bertujuan untuk mempromosikan literasi, memb
 - **Fitur Premium (Amanda Oktivia Sharfina)**<br>Pengguna premium dapat menyewa ruangan, mengakses buku-buku khusus, dan memiliki durasi peminjaman yang lebih lama.
 
 ## Peran Pengguna
-- **Tamu**<br>Pengguna default yang hanya dapat membaca buku dan ulasan.
 - **Pengguna Biasa**<br>Pengguna yang dapat membaca buku, membaca ulasan, menambah ulasan, dan meminjam buku.
 - **Pengguna Premium**<br>Pengguna yang dapat membaca buku, membaca ulasan, menambah ulasan, meminjam buku, mengakses buku-buku khusus, menyewa ruangan, dan memiliki batas durasi peminjaman yang lebih lama.
 - **Pegawai**<br>Pegawai yang dapat mengakses fitur manajemen perpustakaan.
