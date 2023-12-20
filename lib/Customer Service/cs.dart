@@ -15,7 +15,7 @@ class CSPage extends StatefulWidget {
 
 class _CSPageState extends State<CSPage> {
   Future<List<Report>> fetchReport() async {
-    var url = Uri.parse('https://pustaring-b05-tk.pbp.cs.ui.ac.id/customer_service/json/');
+    var url = Uri.parse('https://pustaring-b05-tk.pbp.cs.ui.ac.id/customer_service/json_by_user/');
     var response = await http.get(url, headers: {"Content-Type": "application/json"});
     var data = jsonDecode(utf8.decode(response.bodyBytes));
     List<Report> reports = [];
